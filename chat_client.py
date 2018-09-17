@@ -1,8 +1,12 @@
 import socket
+import re
+import time
+import webbrowser
 from threading import Thread
+from logic import match_with_url
 
 host = socket.gethostname()
-port = 25072
+port = 25002
 
 mySocket = socket.socket()
 mySocket.connect((host,port))
@@ -15,11 +19,15 @@ def send_data():
 		if message =='q':
 			break
 		mySocket.send(message.encode())
+
 def recieve_data():
 	while True:
 		data = mySocket.recv(1024).decode()
 		print('Recieve from server: '+ data)
-#mySocket.close()
+
+		#time.sleep(2)
+		match_with_url(data)
+
 
 if __name__ == '__main__':
 
